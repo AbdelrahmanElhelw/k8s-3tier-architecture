@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1 
+kind: NetworkPolicy
+metadata:
+  name: frontend-egress-policy
+spec:
+  podSelector:
+    matchLabels:
+      app: frontend
+  policyTypes:
+    - Egress
+  egress:
+      - to:
+        - podSelector:
+            matchLabels:
+              app: backend
+        ports:
+        - port: 5000
+
+      - to:
+        - namespaceSelector:            # This allows the pod to reach CoreDNS to translate service names (like backend-service) into IP addresses
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+        ports:
+          - port: 53
+            protocol: UDP
+      - to:
+        - ipBlock:        # to allow frontend to reach the internet
+            cidr: 0.0.0.0/0
+            
+
+
+
