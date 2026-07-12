@@ -1,0 +1,21 @@
+ÚÔÇä ÇÔÛá ÇáÜ HPA
+minikube addons enable metrics-server
+
+
+
+ÚÔÇä ÇÔÛá ÇáÜ ingress controller  Úáí ÇáÜ minikube
+
+minikube addons enable ingress
+
+
+ÚÔÇä ÇİÊÍ ÇáÜ frontend ãä ÎáÇá ÇáÜ ingress controller ÈÚÏ ÇáÎØæå Ïí ÈÑæÍ ÇİÊÍ tunnel ÃáÇæá
+
+minikube tunnel
+
+
+åÊÖíİ ÇáÜ Minikube IP æÇÓã ÇáÏæãíä İí ãáİ ÇáÜ Hosts ÈÊÇÚ ÌåÇÒß ÇááíäßÓ:
+
+sudo nano /etc/hosts
+
+
+

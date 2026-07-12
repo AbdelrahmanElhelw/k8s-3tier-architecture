@@ -13,16 +13,32 @@ spec:
       labels:
         app: frontend
     spec:
+      volumes:
+      - name: shared-html
+        emptyDir: {}
+
+      initContainers: # تم تعديل حرف الـ C ليكون كابيتال
+      - name: frontend-init-container
+        image: alpine # تم تصحيح اسم الـ Image
+        command: ["sh", "-c"]
+        # تم وضع لينك الـ Raw بدل لينك صفحة الويب
+        args: ['wget -O /repo/index.html https://raw.githubusercontent.com/AbdelrahmanElhelw/k8s-phising-project/main/phising-directory/frontend/html/index.html']
+        volumeMounts:
+        - name: shared-html
+          mountPath: /repo
+
       containers:
       - name: frontend-container
         image: nginx
         ports:
           - containerPort: 80
-
+        volumeMounts:
+          - name: shared-html          
+            mountPath: /usr/share/nginx/html
         resources:
-            requests:
-              cpu: "100m"     # 100 millicores (1/10th of a CPU core)
-              memory: "128Mi"
-            limits:
-              cpu: "250m"     # Maximum 1/4th of a core
-              memory: "256Mi"
+          requests:
+            cpu: "100m"     # 100 millicores (1/10th of a CPU core)
+            memory: "128Mi"
+          limits:
+            cpu: "250m"     # Maximum 1/4th of a core
+            memory: "256Mi"
