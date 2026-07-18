@@ -4,7 +4,8 @@ metadata:
   name: main-ingress
 spec:
   rules:
-  - http:
+  - host: phising-website.com
+    http:
       paths:
       - path: /
         pathType: Prefix

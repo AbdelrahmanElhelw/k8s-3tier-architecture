@@ -15,6 +15,44 @@ spec:
     spec:
       containers:
       - name: backend-container
-        image: abdelrahmanelhelw/backend-nti:v3 
+        image: abdelrahmanelhelw/k8s-project-backend:v1 
         ports:
           - containerPort: 5000
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: project-cm
+              key: DB_HOST
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:  
+              name: project-cm
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:  
+              name: project-cm
+              key: DB_PASSWORD    
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:  
+              name: project-cm
+              key: DB_NAME
+              
+                  
+      tolerations:
+      - key: "project"
+        operator: "Equal"
+        value: "phising"
+        effect: "NoSchedule"
+
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "project"
+                operator: "In"
+                values:
+                - "phising"

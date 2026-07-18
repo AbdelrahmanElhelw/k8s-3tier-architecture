@@ -1,0 +1,6 @@
+# Ignore Kubernetes Secrets
+mysql-secret.yaml
+
+PreCommands.txt
+Notes.txt
+Details.txt

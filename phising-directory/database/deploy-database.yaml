@@ -4,7 +4,7 @@ metadata:
   name: stateful-database        # 2. Renamed to reflect the new architecture
 spec:
   serviceName: "database-service" # 3. CRUCIAL: Links this to your Headless Service
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: database
@@ -20,12 +20,31 @@ spec:
             - containerPort: 3306
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: "abdo"
-          
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret          # اسم الـ Secret اللي عملناه
+                  key: mysql-root-password    # اسم الـ Key اللي جواه الباسوورد"
+            
           # 4. We tell the container WHERE to mount the hard drive
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql  # This is the default path where MySQL saves data
+
+      tolerations:
+      - key: "project"
+        operator: "Equal"
+        value: "phising"
+        effect: "NoSchedule"
+
+      affinity: 
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "project"
+                operator: "In"
+                values:
+                - "phising" 
   
   # 5. THE MAGIC: This tells Kubernetes to automatically create a Persistent Volume (Hard Drive)
   volumeClaimTemplates:
