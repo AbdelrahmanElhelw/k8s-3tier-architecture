@@ -1,10 +1,10 @@
 apiVersion: apps/v1
-kind: StatefulSet                # 1. Changed from Deployment to StatefulSet
+kind: StatefulSet                
 metadata:
-  name: stateful-database        # 2. Renamed to reflect the new architecture
+  name: stateful-database        
 spec:
-  serviceName: "database-service" # 3. CRUCIAL: Links this to your Headless Service
-  replicas: 2
+  serviceName: "database-service" 
+  replicas: 1
   selector:
     matchLabels:
       app: database
@@ -22,10 +22,26 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret          # اسم الـ Secret اللي عملناه
-                  key: mysql-root-password    # اسم الـ Key اللي جواه الباسوورد"
+                  name: mysql-secret          
+                  key: mysql-root-password    
+
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:  
+                  name: project-cm
+                  key: DB_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:  
+                  name: project-cm
+                  key: DB_PASSWORD    
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:  
+                  name: project-cm
+                  key: DB_NAME
             
-          # 4. We tell the container WHERE to mount the hard drive
+
           volumeMounts:
             - name: mysql-data
               mountPath: /var/lib/mysql  # This is the default path where MySQL saves data
@@ -33,7 +49,7 @@ spec:
       tolerations:
       - key: "project"
         operator: "Equal"
-        value: "phising"
+        value: "phishing"
         effect: "NoSchedule"
 
       affinity: 
@@ -44,10 +60,9 @@ spec:
               - key: "project"
                 operator: "In"
                 values:
-                - "phising" 
-  
-  # 5. THE MAGIC: This tells Kubernetes to automatically create a Persistent Volume (Hard Drive)
-  volumeClaimTemplates:
+                - "phishing" 
+                
+    volumeClaimTemplates:
   - metadata:
       name: mysql-data
     spec:

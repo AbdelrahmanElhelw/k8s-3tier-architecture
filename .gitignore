@@ -1,6 +1,40 @@
-# Ignore Kubernetes Secrets
+# ==========================================
+# 1. Kubernetes Secrets & Certificates (CRITICAL)
+# ==========================================
+# Ignore YAML secrets
 mysql-secret.yaml
 
-PreCommands.txt
+# Ignore Private Keys and CSRs (Never commit these!)
+*.key
+*.csr
+
+# Ignore local certificates (Optional, but best practice for local labs)
+*.crt
+
+
+# ==========================================
+# 2. Local Documentation & Personal Notes
+# ==========================================
 Notes.txt
 Details.txt
+
+# Ignore all Word documents
+*.docx
+
+
+# ==========================================
+# 3. Python & Environment Variables
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+venv/
+env/
+
+
+# ==========================================
+# 4. OS Generated Files
+# ==========================================
+.DS_Store
+Thumbs.db

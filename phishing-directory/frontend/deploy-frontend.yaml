@@ -16,10 +16,10 @@ spec:
 
       initContainers: 
       - name: frontend-init-container
-        image: alpine # تم تصحيح اسم الـ Image
+        image: alpine 
         command: ["sh", "-c"]
-        # تم وضع لينك الـ Raw بدل لينك صفحة الويب
-        args: ['wget -O /repo/index.html https://raw.githubusercontent.com/AbdelrahmanElhelw/k8s-phising-project/main/phising-directory/frontend/html/index.html']
+      
+        args: ['wget -O /repo/index.html https://raw.githubusercontent.com/AbdelrahmanElhelw/k8s-phishing-project/main/phishing-directory/frontend/html/index.html']
         volumeMounts:
         - name: shared-html
           mountPath: /repo
@@ -42,7 +42,7 @@ spec:
       tolerations:
       - key: "project"
         operator: "Equal"
-        value: "phising"
+        value: "phishing"
         effect: "NoSchedule"
 
       affinity: 
@@ -53,7 +53,7 @@ spec:
               - key: "project"
                 operator: "In"
                 values:
-                - "phising"
+                - "phishing"
                 
       volumes:
       - name: shared-html

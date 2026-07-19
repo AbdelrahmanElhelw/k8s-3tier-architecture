@@ -4,7 +4,7 @@ metadata:
   name: main-ingress
 spec:
   rules:
-  - host: phising-website.com
+  - host: phishing-website.com
     http:
       paths:
       - path: /
@@ -14,3 +14,11 @@ spec:
             name: frontend-service
             port:
               number: 80
+
+      - path: /submit
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-service   
+            port:
+              number: 5000

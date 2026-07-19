@@ -44,7 +44,7 @@ spec:
       tolerations:
       - key: "project"
         operator: "Equal"
-        value: "phising"
+        value: "phishing"
         effect: "NoSchedule"
 
       affinity:
@@ -55,4 +55,4 @@ spec:
               - key: "project"
                 operator: "In"
                 values:
-                - "phising"
+                - "phishing"

@@ -1,8 +1,0 @@
-3-tire application
-default deny all policy
-nginx ingress controller
-database deploy -> statfulsets -> Minikube's default StorageClass
-
-Frontend = Deployment (Stateless)
-Backend = Deployment (Stateless)
-Database = StatefulSet + PV (Stateful)
