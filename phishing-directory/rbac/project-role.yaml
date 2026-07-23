@@ -4,9 +4,22 @@ metadata:
   name: project-role
   namespace: project
 rules:
-- apiGroups:
-  - "*"
-  resources:
-  - '*'
-  verbs:
-  - '*'
+# Core API Group (Services, PVCs, Secrets, Pods, ConfigMaps)
+- apiGroups: [""]
+  resources: ["services", "persistentvolumeclaims", "secrets", "pods", "configmaps"]
+  verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
+
+# Apps API Group (Deployments, StatefulSets)
+- apiGroups: ["apps"]
+  resources: ["deployments", "statefulsets"]
+  verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
+
+# Networking API Group (NetworkPolicies, Ingresses)
+- apiGroups: ["networking.k8s.io"]
+  resources: ["networkpolicies", "ingresses"]
+  verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
+
+# Autoscaling API Group (HPA)
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]

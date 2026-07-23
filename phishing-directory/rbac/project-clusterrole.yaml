@@ -3,9 +3,10 @@ kind: ClusterRole
 metadata:
   name: project-clusterrole
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  verbs:
-  - '*'
+# Core API Group (Nodes, PersistentVolumes)
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "list", "watch"] # For Node affinity and Taints
+- apiGroups: [""]
+  resources: ["persistentvolumes"]
+  verbs: ["create", "get", "list", "watch", "update", "patch", "delete"] # Full permissions for PVs

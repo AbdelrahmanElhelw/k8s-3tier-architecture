@@ -32,9 +32,9 @@ spec:
                   key: DB_USER
             - name: MYSQL_PASSWORD
               valueFrom:
-                configMapKeyRef:  
-                  name: project-cm
-                  key: DB_PASSWORD    
+                secretKeyRef: 
+                  name: mysql-secret
+                  key: DB_PASSWORD  
             - name: MYSQL_DATABASE
               valueFrom:
                 configMapKeyRef:  
